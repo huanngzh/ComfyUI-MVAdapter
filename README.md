@@ -21,7 +21,7 @@ This extension integrates [MV-Adapter](https://github.com/huanngzh/MV-Adapter) i
 
 We provide the example workflows in `workflows` directory.
 
-Note that our code depends on diffusers, and will automatically download the model weights from huggingface to the hf cache path at the first time. The `ckpt_name` in the node corresponds to the model name in huggingface, such as `stabilityai/stable-diffusion-xl-base-1.0`.
+Note that our code depends on diffusers, and will automatically download the model weights from Hugging Face to the hf cache path at the first time. The `ckpt_name` in the node corresponds to the model name in Hugging Face, such as `stabilityai/stable-diffusion-xl-base-1.0`.
 
 We also provide the nodes `Ldm**Loader` to support loading text-to-image models in `ldm` format. Please see the workflow files with the suffix `_ldm.json`.
 
