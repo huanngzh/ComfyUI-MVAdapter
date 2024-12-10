@@ -1,6 +1,6 @@
 import torch
 from comfy.model_management import get_torch_device
-from ..utils import convert_images_to_tensors, prepare_camera_embed
+from ..utils import convert_images_to_tensors, convert_tensors_to_images, prepare_camera_embed
 
 class DiffusersMVSampler:
     def __init__(self):
