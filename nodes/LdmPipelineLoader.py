@@ -2,6 +2,8 @@ import torch
 
 import folder_paths
 from ..mvadapter.pipelines.pipeline_mvadapter_t2mv_sdxl import MVAdapterT2MVSDXLPipeline
+from ..utils import PIPELINES
+
 
 class LdmPipelineLoader:
     def __init__(self):
