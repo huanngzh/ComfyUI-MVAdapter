@@ -1,5 +1,5 @@
 from comfy.model_management import get_torch_device
-from ..utils import convert_images_to_tensors, preprocess_image
+from ..utils import convert_images_to_tensors, convert_tensors_to_images, preprocess_image
 
 class ImagePreprocessor:
     def __init__(self):
