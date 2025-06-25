@@ -209,7 +209,7 @@ class DiffusersMVSchedulerLoader:
         return (scheduler,)
 
 
-class LoraModelLoader:
+class CustomLoraModelLoader:
     def __init__(self):
         self.loaded_lora = None
 
@@ -223,6 +223,14 @@ class LoraModelLoader:
                     "FLOAT",
                     {"default": 1.0, "min": -100.0, "max": 100.0, "step": 0.01},
                 ),
+                "enable": (
+                    "BOOLEAN",
+                    {"default": True},
+                ),
+                "last_lora_node": (
+                    "BOOLEAN",
+                    {"default": True},
+                ),
             }
         }
 
@@ -230,30 +238,48 @@ class LoraModelLoader:
     FUNCTION = "load_lora"
     CATEGORY = "MV-Adapter"
 
-    def load_lora(self, pipeline, lora_name, strength_model):
-        if strength_model == 0:
-            return (pipeline,)
+    def load_lora(self, pipeline, lora_name, strength_model, enable, last_lora_node):
+        if not hasattr(pipeline, "loaded_loras"):
+            pipeline.loaded_loras = []
 
         lora_path = folder_paths.get_full_path("loras", lora_name)
         lora_dir = os.path.dirname(lora_path)
         lora_name = os.path.basename(lora_path)
         lora = None
-        if self.loaded_lora is not None:
-            if self.loaded_lora[0] == lora_path:
-                lora = self.loaded_lora[1]
-            else:
+        if enable:
+            if self.loaded_lora is not None:
+                if self.loaded_lora[0] == lora_path:
+                    lora = self.loaded_lora[1]
+                else:
+                    temp = self.loaded_lora
+                    pipeline.delete_adapters(temp[1])
+                    pipeline.loaded_loras = [(name, strength) for (name, strength) in pipeline.loaded_loras if name != temp[1]]
+                    self.loaded_lora = None
+
+            if lora is None:
+                adapter_name = lora_name.rsplit(".", 1)[0]
+                pipeline.load_lora_weights(
+                    lora_dir, weight_name=lora_name, adapter_name=adapter_name
+                )
+                pipeline.set_adapters(adapter_name, strength_model)
+                self.loaded_lora = (lora_path, adapter_name)
+                lora = adapter_name
+
+                pipeline.loaded_loras.append((adapter_name, strength_model))
+        else:
+            # Delete the loaded lora
+            if self.loaded_lora is not None:
                 temp = self.loaded_lora
                 pipeline.delete_adapters(temp[1])
+                pipeline.loaded_loras = [(name, strength) for (name, strength) in pipeline.loaded_loras if name != temp[1]]
                 self.loaded_lora = None
 
-        if lora is None:
-            adapter_name = lora_name.rsplit(".", 1)[0]
-            pipeline.load_lora_weights(
-                lora_dir, weight_name=lora_name, adapter_name=adapter_name
-            )
-            pipeline.set_adapters(adapter_name, strength_model)
-            self.loaded_lora = (lora_path, adapter_name)
-            lora = adapter_name
+        if last_lora_node:
+            adapter_names = [x[0] for x in pipeline.loaded_loras]
+            strengths = [x[1] for x in pipeline.loaded_loras]
+            pipeline.set_adapters(adapter_names, strengths)
+
+            print(adapter_names)
 
         return (pipeline,)
 
@@ -720,7 +746,7 @@ NODE_CLASS_MAPPINGS = {
     "DiffusersMVVaeLoader": DiffusersMVVaeLoader,
     "DiffusersMVSchedulerLoader": DiffusersMVSchedulerLoader,
     "DiffusersMVModelMakeup": DiffusersMVModelMakeup,
-    "LoraModelLoader": LoraModelLoader,
+    "CustomLoraModelLoader": CustomLoraModelLoader,
     "DiffusersMVSampler": DiffusersMVSampler,
     "BiRefNet": BiRefNet,
     "ImagePreprocessor": ImagePreprocessor,
@@ -736,7 +762,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "DiffusersMVVaeLoader": "Diffusers MV Vae Loader",
     "DiffusersMVSchedulerLoader": "Diffusers MV Scheduler Loader",
     "DiffusersMVModelMakeup": "Diffusers MV Model Makeup",
-    "LoraModelLoader": "Lora Model Loader",
+    "CustomLoraModelLoader": "Custom Lora Model Loader",
     "DiffusersMVSampler": "Diffusers MV Sampler",
     "BiRefNet": "BiRefNet",
     "ImagePreprocessor": "Image Preprocessor",

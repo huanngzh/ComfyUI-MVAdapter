@@ -259,7 +259,7 @@
         },
         {
             "id": 11,
-            "type": "LoraModelLoader",
+            "type": "CustomLoraModelLoader",
             "pos": [
                 656.7574462890625,
                 490.3138427734375
@@ -289,11 +289,13 @@
                 }
             ],
             "properties": {
-                "Node name for S&R": "LoraModelLoader"
+                "Node name for S&R": "CustomLoraModelLoader"
             },
             "widgets_values": [
-                "anime_sdxl_v1.safetensors",
-                1
+                "3d_render_style_xl.safetensors",
+                1,
+                true,
+                true
             ]
         }
     ],
