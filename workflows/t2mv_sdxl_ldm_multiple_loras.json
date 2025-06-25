@@ -1,0 +1,487 @@
+{
+  "id": "27703e03-4acd-4b13-88a8-06877ccc3682",
+  "revision": 0,
+  "last_node_id": 13,
+  "last_link_id": 22,
+  "nodes": [
+    {
+      "id": 4,
+      "type": "LdmVaeLoader",
+      "pos": [
+        247.52098083496094,
+        558.488525390625
+      ],
+      "size": [
+        315,
+        82
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "AUTOENCODER",
+          "type": "AUTOENCODER",
+          "slot_index": 0,
+          "links": [
+            14
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LdmVaeLoader"
+      },
+      "widgets_values": [
+        "sdxl_vae.safetensors",
+        true
+      ]
+    },
+    {
+      "id": 9,
+      "type": "DiffusersMVSchedulerLoader",
+      "pos": [
+        236.58033752441406,
+        346.41693115234375
+      ],
+      "size": [
+        327.5999755859375,
+        130
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pipeline",
+          "type": "PIPELINE",
+          "link": 9
+        }
+      ],
+      "outputs": [
+        {
+          "name": "SCHEDULER",
+          "type": "SCHEDULER",
+          "slot_index": 0,
+          "links": [
+            13
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DiffusersMVSchedulerLoader"
+      },
+      "widgets_values": [
+        "DDIM",
+        true,
+        "interpolated",
+        8
+      ]
+    },
+    {
+      "id": 1,
+      "type": "LdmPipelineLoader",
+      "pos": [
+        245.8949432373047,
+        130.0254364013672
+      ],
+      "size": [
+        315,
+        122
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "PIPELINE",
+          "type": "PIPELINE",
+          "slot_index": 0,
+          "links": [
+            9,
+            12
+          ]
+        },
+        {
+          "name": "AUTOENCODER",
+          "type": "AUTOENCODER",
+          "links": null
+        },
+        {
+          "name": "SCHEDULER",
+          "type": "SCHEDULER",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LdmPipelineLoader"
+      },
+      "widgets_values": [
+        "sd_xl_base_1.0.safetensors",
+        "MVAdapterT2MVSDXLPipeline"
+      ]
+    },
+    {
+      "id": 10,
+      "type": "DiffusersMVModelMakeup",
+      "pos": [
+        659.5178833007812,
+        174.95619201660156
+      ],
+      "size": [
+        315,
+        238
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pipeline",
+          "type": "PIPELINE",
+          "link": 12
+        },
+        {
+          "name": "scheduler",
+          "type": "SCHEDULER",
+          "link": 13
+        },
+        {
+          "name": "autoencoder",
+          "type": "AUTOENCODER",
+          "link": 14
+        },
+        {
+          "name": "lora",
+          "shape": 7,
+          "type": "L",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "PIPELINE",
+          "type": "PIPELINE",
+          "slot_index": 0,
+          "links": [
+            16
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DiffusersMVModelMakeup"
+      },
+      "widgets_values": [
+        true,
+        "huanngzh/mv-adapter",
+        "mvadapter_t2mv_sdxl.safetensors",
+        6,
+        true,
+        false
+      ]
+    },
+    {
+      "id": 8,
+      "type": "PreviewImage",
+      "pos": [
+        1521.929443359375,
+        102.87110137939453
+      ],
+      "size": [
+        337.5841064453125,
+        545.9476318359375
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 7
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 7,
+      "type": "DiffusersMVSampler",
+      "pos": [
+        1050.723388671875,
+        218.12826538085938
+      ],
+      "size": [
+        400,
+        394
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pipeline",
+          "type": "PIPELINE",
+          "link": 22
+        },
+        {
+          "name": "reference_image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "controlnet_image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "azimuth_degrees",
+          "shape": 7,
+          "type": "LIST",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            7
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DiffusersMVSampler"
+      },
+      "widgets_values": [
+        6,
+        "3d style, a fox with flowers around it",
+        "watermark, ugly, deformed, noisy, blurry, low contrast",
+        768,
+        768,
+        50,
+        7,
+        375723783265130,
+        "randomize",
+        1
+      ]
+    },
+    {
+      "id": 13,
+      "type": "CustomLoraModelLoader",
+      "pos": [
+        663.2525024414062,
+        843.3848876953125
+      ],
+      "size": [
+        315,
+        130
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pipeline",
+          "type": "PIPELINE",
+          "link": 21
+        }
+      ],
+      "outputs": [
+        {
+          "name": "PIPELINE",
+          "type": "PIPELINE",
+          "slot_index": 0,
+          "links": [
+            22
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CustomLoraModelLoader"
+      },
+      "widgets_values": [
+        "1980s_Fantasy_Style_SDXL.safetensors",
+        0.30000000000000004,
+        true,
+        true
+      ]
+    },
+    {
+      "id": 11,
+      "type": "CustomLoraModelLoader",
+      "pos": [
+        659.8198852539062,
+        467.5633239746094
+      ],
+      "size": [
+        315,
+        130
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pipeline",
+          "type": "PIPELINE",
+          "link": 16
+        }
+      ],
+      "outputs": [
+        {
+          "name": "PIPELINE",
+          "type": "PIPELINE",
+          "slot_index": 0,
+          "links": [
+            20
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CustomLoraModelLoader"
+      },
+      "widgets_values": [
+        "3d_render_style_xl.safetensors",
+        0.30000000000000004,
+        true,
+        false
+      ]
+    },
+    {
+      "id": 12,
+      "type": "CustomLoraModelLoader",
+      "pos": [
+        662.6155395507812,
+        655.0852661132812
+      ],
+      "size": [
+        315,
+        130
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pipeline",
+          "type": "PIPELINE",
+          "link": 20
+        }
+      ],
+      "outputs": [
+        {
+          "name": "PIPELINE",
+          "type": "PIPELINE",
+          "slot_index": 0,
+          "links": [
+            21
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CustomLoraModelLoader"
+      },
+      "widgets_values": [
+        "3dpolygonStyle.safetensors",
+        0.30000000000000004,
+        true,
+        false
+      ]
+    }
+  ],
+  "links": [
+    [
+      7,
+      7,
+      0,
+      8,
+      0,
+      "IMAGE"
+    ],
+    [
+      9,
+      1,
+      0,
+      9,
+      0,
+      "PIPELINE"
+    ],
+    [
+      12,
+      1,
+      0,
+      10,
+      0,
+      "PIPELINE"
+    ],
+    [
+      13,
+      9,
+      0,
+      10,
+      1,
+      "SCHEDULER"
+    ],
+    [
+      14,
+      4,
+      0,
+      10,
+      2,
+      "AUTOENCODER"
+    ],
+    [
+      16,
+      10,
+      0,
+      11,
+      0,
+      "PIPELINE"
+    ],
+    [
+      20,
+      11,
+      0,
+      12,
+      0,
+      "PIPELINE"
+    ],
+    [
+      21,
+      12,
+      0,
+      13,
+      0,
+      "PIPELINE"
+    ],
+    [
+      22,
+      13,
+      0,
+      7,
+      0,
+      "PIPELINE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.803552158862256,
+      "offset": [
+        -128.2888904303056,
+        -107.83259622641816
+      ]
+    },
+    "frontendVersion": "1.22.2"
+  },
+  "version": 0.4
+}
