@@ -4,6 +4,7 @@ This extension integrates [MV-Adapter](https://github.com/huanngzh/MV-Adapter) i
 
 ## 🔥 Feature Updates
 
+* [2025-06-26] Support multiple loras for multi-view synthesis [See [here](https://github.com/huanngzh/ComfyUI-MVAdapter/pull/96)]
 * [2025-01-15] Support selection of generated perspectives, such as generating only 2 views (front&back) [See [here](#view-selection)]
 * [2024-12-25] Support integration with ControlNet, for applications like scribble to multi-view images [See [here](#with-controlnet)]
 * [2024-12-09] Support integration with SDXL LoRA [See [here](#with-lora)]
