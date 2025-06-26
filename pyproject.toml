@@ -1,7 +1,7 @@
 [project]
 name = "comfyui-mvadapter"
 description = "This extension integrates [a/MV-Adapter](https://github.com/huanngzh/MV-Adapter) into ComfyUI, allowing users to generate multi-view consistent images from text prompts or single images directly within the ComfyUI interface."
-version = "1.0.1"
+version = "1.0.2"
 license = {file = "LICENSE"}
 dependencies = ["torch>=2.1.1", "torchvision>=0.16.1", "diffusers>=0.31.0", "transformers>=4.46.3", "peft", "numpy>=1.26.2", "huggingface_hub>=0.24.6", "accelerate>=1.1.1", "opencv-python", "safetensors", "pillow", "omegaconf", "trimesh", "einops", "timm", "kornia", "scikit-image"]
 
